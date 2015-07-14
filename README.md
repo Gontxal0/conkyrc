@@ -76,7 +76,7 @@ http://custom-linux.deviantart.com/gallery/39357745/Conky-Themes?set=39357745&of
 
 Notes
 ------
-Place the Aller folder in ~/.fonts or /usr/share/fonts and run
+Place the content of the font folder in ~/.fonts or /usr/share/fonts and run
 
 ``
 fc-cache -fv
