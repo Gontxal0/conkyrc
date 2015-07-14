@@ -1,0 +1,106 @@
+#Desaparece
+#Falta Weather
+background yes
+use_xft yes
+xftfont Roboto:size=9
+xftalpha 0.8
+update_interval 1
+total_run_times 0
+own_window yes
+own_window_transparent yes
+##############################################
+# Compositing tips:
+# Conky can play strangely when used with
+# different compositors. I have found the
+# following to work well, but your mileage
+# may vary. Comment/uncomment to suit.
+##############################################
+## no compositor
+#own_window_type override
+#own_window_argb_visual no
+
+## xcompmgr
+#own_window_type override
+#own_window_argb_visual yes
+
+## cairo-compmgr
+own_window_type desktop # Try also 'normal' or 'override' or 'dock' or 'panel'
+own_window_argb_visual no
+##############################################
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+stippled_borders 0
+border_inner_margin 5
+border_width 1
+default_color white
+default_shade_color 000000
+default_outline_color 000000
+alignment top_right
+minimum_size 600 600
+maximum_width 600
+gap_x -380
+gap_y 80
+alignment top_right
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+net_avg_samples 2
+short_units yes
+text_buffer_size 2048
+use_spacer none
+override_utf8_locale yes
+color1 212021
+color2 E8E1E6
+color3 E82A2A
+own_window_argb_value 0
+own_window_colour 000000
+TEXT
+${goto 103}${voffset 3}${font Raleway:size=15} MATE
+${image icons/side.png -p 100,33 -s 115x4}
+${goto 110}${voffset 10}${font LG Weather_Z:size=80}${time %I}
+${goto 110}${voffset -17}${font LG Weather_Z:size=80}${time %M}
+${goto 110}${voffset -265}${font Helvetica Neue LT Com:size=22}${time %a %d} ${font Helvetica Neue LT Com:size=20}
+${goto 110}${voffset 169}${time %b,%Y}
+${image icons/side.png -p 100,270 -s 115x4}${font Helvetica Neue LT Com:Bold:size=15}${goto 128}${voffset 5}Weather
+${image icons/side.png -p 100,305 -s 115x4}
+# --- Weather --- #
+###################
+\
+# --- WOEID (Location id) --- #
+${execi 300 curl -s "http://weather.yahooapis.com/forecastrss?w=1103816&u=c" -o ~/.cache/weather.xml}\
+# --- Temperature --- #
+#######################
+\
+${font LG Weather_Z:size=35}${offset 115}${voffset -8}${execi 300 grep "yweather:condition" ~/.cache/weather.xml | grep -o "temp=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}°${font GeosansLight:bold:size=9}Celsius${font Helvetica Neue LT Com:size=13}
+
+${font LG Weather_Z:bold:size=12}${offset 130}${voffset -10}${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1'}°
+
+${offset 175}${voffset -30}${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1'}°
+
+# --- Icon - high temperature --- #
+###################################
+\
+${image icons/arrow-up.png -p 112,368 -s 10x10}
+
+# --- Icon - low temperature icon --- #
+#######################################
+\
+${image icons/arrow-down.png -p 162,368 -s 10x10}
+
+${image icons/side.png -p 100,387 -s 115x4}
+${font Helvetica Neue LT Com:Bold:size=15}${goto 128}${voffset -75}Systems
+${image icons/side.png -p 100,420 -s 115x4}
+####Systems###
+${offset 135 }${voffset 2}${font GeosansLight:Bold:size=11}$acpitemp'C
+${image icons/Chip.png -p 105,470 -s 20x20}${offset 135}${voffset 14}${cpu cpu0}% / 100%${font GeosansLight:Bold:size=8}
+${image icons/mirco.png -p 105,500 -s 20x20}${offset 135}${voffset 15}$memfree / $memmax
+${image icons/up.png -p 108,525 -s 15x15}${offset 135}${voffset 12}${upspeed wlan0} kb/s / ${totalup wlan0}
+${image icons/dwn.png -p 108,555 -s 15x15}${offset 135}${voffset 17}${downspeed wlan0} kb/s / ${totaldown wlan0}
+
+
+
+${image icons/thero.png -p 105,440 -s 18x18}

@@ -1,0 +1,81 @@
+#Desaparece
+#Falta Weather
+background yes
+use_xft yes
+xftfont ITC Avant Garde Gothic Pro:size=9
+xftalpha 0.8
+update_interval 1
+total_run_times 0
+own_window yes
+own_window_transparent yes
+##############################################
+# Compositing tips:
+# Conky can play strangely when used with
+# different compositors. I have found the
+# following to work well, but your mileage
+# may vary. Comment/uncomment to suit.
+##############################################
+## no compositor
+#own_window_type override
+#own_window_argb_visual no
+
+## xcompmgr
+#own_window_type override
+#own_window_argb_visual yes
+
+## cairo-compmgr
+own_window_type desktop # Try also 'normal' or 'override' or 'dock' or 'panel'
+own_window_argb_visual no
+##############################################
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+stippled_borders 0
+border_inner_margin 5
+border_width 1
+default_color 000000
+default_shade_color 000000
+default_outline_color 000000
+minimum_size 0 0
+maximum_width 500
+gap_x 5
+gap_y 5
+alignment top_right
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+net_avg_samples 2
+short_units yes
+text_buffer_size 2048
+use_spacer none
+override_utf8_locale yes
+default_color CACCCB
+color1 CACCCB
+color2 white
+color3 F51462
+
+own_window_argb_value 0
+own_window_colour 000000
+TEXT
+${goto 35}${font ITC Avant Garde Gothic Pro:size=90} ${time %I}${color3}${time %M}${color1}
+${goto 175}${voffset -80}${font ITC Avant Garde Gothic Pro:size=15} ${time %A}
+${goto 185}${voffset }${font ITC Avant Garde Gothic Pro:bold:size=25} ${time %b}
+${goto 265}${voffset -50}${color3}${font ITC Avant Garde Gothic Pro::size=35}${time %d}${color2}
+${goto 350}${voffset -185}${font ITC Avant Garde Gothic Pro:size=15}Mem${color3} $memperc%${color2}
+
+${goto 350}Cpu${color3} ${cpu cpu0}%${color2}
+
+${goto 350}Wifi ${color3}${wireless_link_qual wlan0}%${color2}
+
+${goto 350}Battery${color3} ${battery_percent BAT0}%
+##Weather
+#${image icons/weather_icons_white/2.png -s 190x190}
+#Aachen WOEID:GMXX0154
+#${texeci 1300 curl -s "http://weather.yahooapis.com/forecastrss?w=773418&u=c" -o ~/.cache/weather.xml}
+#Donostia WOEID
+${texeci 1300 curl -s "http://weather.yahooapis.com/forecastrss?w=773418&u=c" -o ~/.cache/weather.xml}
+${voffset -40}${offset 100}${font ITC Avant Garde Gothic Pro:bold:size=20}${execi 1300 grep "yweather:condition" ~/.cache/weather.xml | grep -o "temp=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${font ITC Avant Garde Gothic Pro:bold:size=8}${voffset -16}o${voffset 14}${font}${color1}
+${execi 1300 cp -f icons/weather_icons_white/$(grep "yweather:condition" ~/.cache/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*").png ~/.cache/weather.png}${image ~/.cache/weather.png -p 100,95 -s 35x35}${font ITC Avant Garde Gothic Pro:bold:size=12}
