@@ -76,13 +76,11 @@ http://custom-linux.deviantart.com/gallery/39357745/Conky-Themes?set=39357745&of
 
 Notes
 ------
-This is the readme file for Steel Conky by saraithegeek.
-
-To install, copy the contents of the conkyrc file into ~/.conkyrc
-
 Place the Aller folder in ~/.fonts or /usr/share/fonts and run
 
-# fc-cache -fv
+``
+fc-cache -fv
+``
 
 to update the font cache.
 
